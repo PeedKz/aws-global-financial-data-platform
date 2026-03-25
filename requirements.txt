@@ -1,0 +1,8 @@
+yfinance
+requests
+pandas
+pyarrow
+python-dotenv
+tenacity
+pydantic
+pytest
