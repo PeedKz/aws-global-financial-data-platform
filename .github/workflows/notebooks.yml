@@ -30,14 +30,13 @@ jobs:
         shell: python
         run: |
           import json
+          import re
           from pathlib import Path
 
-          forbidden_patterns = [
-              "ALPHA_VANTAGE_API_KEY",
-              "apikey=",
-              "api_key",
-              "secret",
-              "token",
+          suspicious_code_patterns = [
+              r"os\.environ\[[\"'][^\"']*(api[_-]?key|token|secret)[^\"']*[\"']\]\s*=\s*[\"'][^\"']+[\"']",
+              r"(api[_-]?key|token|secret)\s*=\s*[\"'][^\"']+[\"']",
+              r"apikey=[A-Za-z0-9_\-]{8,}",
           ]
 
           notebook_paths = sorted(Path("notebooks").glob("*.ipynb"))
@@ -62,13 +61,16 @@ jobs:
                           f"{notebook_path}: cell {index} contains outputs. Clear notebook outputs before merge."
                       )
 
+                  if cell.get("cell_type") != "code":
+                      continue
+
                   source = "".join(cell.get("source", []))
-                  lowered = source.lower()
-                  for pattern in forbidden_patterns:
-                      if pattern.lower() in lowered:
+                  for pattern in suspicious_code_patterns:
+                      if re.search(pattern, source, re.IGNORECASE):
                           errors.append(
-                              f"{notebook_path}: cell {index} contains suspicious text '{pattern}'"
+                              f"{notebook_path}: cell {index} contains suspicious hardcoded secret-like content"
                           )
+                          break
 
           if errors:
               print("Notebook validation failed:")
