@@ -1,4 +1,4 @@
-# GitHub Actions Strategy
+﻿# GitHub Actions Strategy
 
 ## Goal
 
@@ -35,8 +35,8 @@ Checks included:
 - `ruff check src`
 - `ruff format --check src`
 - `python -m compileall src`
-- `pytest`
-- `gitleaks detect`
+- `PYTHONPATH=. pytest`
+- `gitleaks/gitleaks-action@v2`
 
 ### 2. `notebooks.yml`
 
@@ -80,6 +80,7 @@ Recommended rules:
 Mark these checks as required on `main`:
 
 - `Lint, Tests, and Security`
+- `Secret Scan`
 - `Validate Notebooks`
 - `Markdown Lint`
 
