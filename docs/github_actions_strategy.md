@@ -62,6 +62,21 @@ Checks included:
 
 - Markdown lint for `README.md` and `docs/**/*.md`
 
+### 4. `auto-pr.yml`
+
+Purpose:
+
+- run a full validation gate on feature branches
+- automatically create or reuse a pull request to `main`
+- ensure a branch only auto-opens a PR after every configured validation succeeds
+
+Checks included before PR creation:
+
+- code validation
+- notebook validation
+- documentation validation
+- secret scan
+
 ## Recommended Branch Protection for `main`
 
 These settings must be configured in GitHub repository settings.
@@ -90,6 +105,8 @@ Mark these checks as required on `main`:
 feature branch
   -> push commits
   -> GitHub Actions run
+  -> auto-pr workflow validates branch
+  -> auto-pr workflow creates or reuses PR to main
   -> open pull request to main
   -> checks pass
   -> review approved
@@ -105,6 +122,7 @@ This setup is a strong fit for the current stage of the repository because it:
 - keeps notebooks clean and reviewable
 - keeps documentation in good shape
 - avoids over-engineering CI around local data files that will not live in Git
+- reduces manual PR creation for feature branches
 
 ## Future Evolution
 
