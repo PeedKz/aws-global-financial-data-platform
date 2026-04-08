@@ -46,8 +46,14 @@ class AlphaVantageClient:
     def _redact_api_key(self, url: str) -> str:
         return url.replace(self.api_key, "***REDACTED***")
 
-    def fetch_stock_prices_daily(self, symbol: str, *, outputsize: str = "compact") -> dict[str, Any]:
-        return self.call(function="TIME_SERIES_DAILY", symbol=symbol, outputsize=outputsize)
+    def fetch_stock_prices_daily(
+        self, symbol: str, *, outputsize: str = "compact"
+    ) -> dict[str, Any]:
+        return self.call(
+            function="TIME_SERIES_DAILY",
+            symbol=symbol,
+            outputsize=outputsize,
+        )
 
     def fetch_company_overview(self, symbol: str) -> dict[str, Any]:
         return self.call(function="OVERVIEW", symbol=symbol)
@@ -58,7 +64,9 @@ class AlphaVantageClient:
     def fetch_balance_sheet(self, symbol: str) -> dict[str, Any]:
         return self.call(function="BALANCE_SHEET", symbol=symbol)
 
-    def fetch_fx_daily(self, from_symbol: str, to_symbol: str, *, outputsize: str = "compact") -> dict[str, Any]:
+    def fetch_fx_daily(
+        self, from_symbol: str, to_symbol: str, *, outputsize: str = "compact"
+    ) -> dict[str, Any]:
         return self.call(
             function="FX_DAILY",
             from_symbol=from_symbol,

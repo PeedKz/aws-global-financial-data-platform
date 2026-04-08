@@ -77,7 +77,9 @@ class RawWriter:
     def _default_filename(dataset: str, natural_keys: dict[str, str]) -> str:
         if not natural_keys:
             return f"{dataset}.json"
-        suffix = "_".join(str(value).replace("/", "_") for value in natural_keys.values())
+        suffix = "_".join(
+            str(value).replace("/", "_") for value in natural_keys.values()
+        )
         return f"{dataset}_{suffix}.json"
 
     @staticmethod
