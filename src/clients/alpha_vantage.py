@@ -49,7 +49,11 @@ class AlphaVantageClient:
     def fetch_stock_prices_daily(
         self, symbol: str, *, outputsize: str = "compact"
     ) -> dict[str, Any]:
-        return self.call(function="TIME_SERIES_DAILY", symbol=symbol, outputsize=outputsize)
+        return self.call(
+            function="TIME_SERIES_DAILY",
+            symbol=symbol,
+            outputsize=outputsize,
+        )
 
     def fetch_company_overview(self, symbol: str) -> dict[str, Any]:
         return self.call(function="OVERVIEW", symbol=symbol)
