@@ -77,6 +77,17 @@ Checks included before PR creation:
 - documentation validation
 - secret scan
 
+Authentication options for PR creation:
+
+- preferred: repository secret `PR_CREATOR_TOKEN`
+- fallback: default `GITHUB_TOKEN`
+
+Important:
+
+- if you want to use only the default `GITHUB_TOKEN`, the repository must enable:
+  `Settings -> Actions -> General -> Workflow permissions -> Allow GitHub Actions to create and approve pull requests`
+- if that setting is not enabled, the workflow must use a secret token with pull request write permission
+
 ## Recommended Branch Protection for `main`
 
 These settings must be configured in GitHub repository settings.
@@ -123,6 +134,18 @@ This setup is a strong fit for the current stage of the repository because it:
 - keeps documentation in good shape
 - avoids over-engineering CI around local data files that will not live in Git
 - reduces manual PR creation for feature branches
+
+## Required GitHub Setting for Auto PR
+
+If auto PR creation fails with HTTP 403, check one of these options:
+
+1. Enable GitHub Actions pull request creation in repository settings.
+2. Create a secret named `PR_CREATOR_TOKEN`.
+
+Recommended permissions for `PR_CREATOR_TOKEN`:
+
+- contents: write
+- pull requests: write
 
 ## Future Evolution
 
